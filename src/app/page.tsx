@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { CourseBadge } from "@/components/CourseBadge";
 import { CourseExplorer } from "@/components/CourseExplorer";
 import { Icon } from "@/components/Icon";
@@ -11,9 +12,23 @@ export default function HomePage() {
       <Hero />
       <Stats />
       <Roadmap />
-      <CourseExplorer />
+      <Suspense fallback={<CourseExplorerFallback />}>
+        <CourseExplorer />
+      </Suspense>
       <Footer />
     </main>
+  );
+}
+
+function CourseExplorerFallback() {
+  return (
+    <section
+      id="clases"
+      aria-busy="true"
+      className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
+    >
+      <div className="h-40 animate-pulse rounded-[2rem] border border-white/80 bg-white/60" />
+    </section>
   );
 }
 

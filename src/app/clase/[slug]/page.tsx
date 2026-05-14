@@ -86,27 +86,58 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
           </ContentCard>
 
           <ContentCard id="conceptos" icon="target" title="Conceptos clave">
-            <ul className="space-y-3">
-              {lecture.concepts.map((concept) => (
-                <li key={concept} className="flex gap-3 rounded-2xl bg-slate-50 p-4 text-slate-700">
-                  <span aria-hidden="true" className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
-                  <span>{concept}</span>
+            <ol className="grid gap-3">
+              {lecture.concepts.map((concept, index) => (
+                <li
+                  key={concept}
+                  className="flex items-start gap-4 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-950 text-xs font-black tabular-nums text-amber-300"
+                  >
+                    {index + 1}
+                  </span>
+                  <span className="text-pretty text-slate-700">{concept}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </ContentCard>
 
           <ContentCard id="formulas" icon="formula" title="Fórmulas importantes">
-            <div className="grid gap-3 md:grid-cols-2">
-              {lecture.formulas.map((formula) => (
-                <div
-                  key={formula}
-                  className="formula-card overflow-x-auto rounded-2xl p-4 font-mono text-sm leading-6 text-amber-100 shadow-lg [overscroll-behavior-x:contain]"
-                >
-                  {formula}
-                </div>
-              ))}
-            </div>
+            <ol className="not-prose grid gap-3 md:grid-cols-2">
+              {lecture.formulas.map((raw, index) => {
+                const { label, expr, note } = parseFormula(raw);
+                return (
+                  <li
+                    key={raw}
+                    className="formula-card flex flex-col gap-2 rounded-2xl p-5 shadow-lg ring-1 ring-amber-300/10"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-amber-400/15 text-[0.7rem] font-black tabular-nums text-amber-300"
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      {label ? (
+                        <span className="text-[0.7rem] font-black uppercase tracking-[0.18em] text-amber-300/80">
+                          {label}
+                        </span>
+                      ) : null}
+                    </div>
+                    <div className="font-mono text-base leading-7 text-amber-100 [overflow-wrap:anywhere]">
+                      {expr}
+                    </div>
+                    {note ? (
+                      <div className="text-xs leading-5 text-amber-100/60">
+                        {note}
+                      </div>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ol>
           </ContentCard>
 
           <ContentCard id="ejemplo" icon="spark" title="Ejemplo explicado">
@@ -210,4 +241,23 @@ function ContentCard({
       <div className="prose-course text-base leading-8">{children}</div>
     </section>
   );
+}
+
+function parseFormula(raw: string): { label?: string; expr: string; note?: string } {
+  const cleaned = raw.replace(/\.\s*$/, "").trim();
+
+  const colonIdx = cleaned.indexOf(": ");
+  if (colonIdx > 0 && colonIdx < 40) {
+    const possibleLabel = cleaned.slice(0, colonIdx).trim();
+    if (/^[A-Za-zÀ-ÿ\s]+$/.test(possibleLabel)) {
+      return { label: possibleLabel, expr: cleaned.slice(colonIdx + 2).trim() };
+    }
+  }
+
+  const noteMatch = cleaned.match(/^(.+?)\s+(cuando|donde|para todo|para cada)\s+(.+)$/i);
+  if (noteMatch) {
+    return { expr: noteMatch[1].trim(), note: `${noteMatch[2]} ${noteMatch[3]}`.trim() };
+  }
+
+  return { expr: cleaned };
 }
