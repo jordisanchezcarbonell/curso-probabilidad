@@ -2,120 +2,123 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { CourseBadge } from "@/components/CourseBadge";
 import { CourseExplorer } from "@/components/CourseExplorer";
-import { Icon } from "@/components/Icon";
 import { SectionTitle } from "@/components/SectionTitle";
 import { blocks, course, getBlockStats, lectures } from "@/lib/course";
 
 export default function HomePage() {
   return (
-    <main id="main">
-      <Hero />
-      <Stats />
-      <Roadmap />
-      <Suspense fallback={<CourseExplorerFallback />}>
-        <CourseExplorer />
-      </Suspense>
-      <Footer />
-    </main>
+    <>
+      <SiteHeader />
+      <main id="main">
+        <Hero />
+        <DataStrip />
+        <Roadmap />
+        <Suspense fallback={<CourseExplorerFallback />}>
+          <CourseExplorer />
+        </Suspense>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
 
-function CourseExplorerFallback() {
+function SiteHeader() {
   return (
-    <section
-      id="clases"
-      aria-busy="true"
-      className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
-    >
-      <div className="h-40 animate-pulse rounded-[2rem] border border-white/80 bg-white/60" />
-    </section>
+    <header className="border-b border-rule">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link href="/" className="flex items-baseline gap-3 text-sm">
+          <span className="font-serif text-base font-semibold tracking-tight">Stat 110</span>
+          <span className="text-faint" aria-hidden="true">·</span>
+          <span className="text-muted">Probabilidad, en español</span>
+        </Link>
+        <nav aria-label="Principal" className="flex items-center gap-6 text-sm text-muted">
+          <a href="#clases" className="transition-colors hover:text-ink">Clases</a>
+          <a href="#mapa" className="transition-colors hover:text-ink">Mapa</a>
+          <a href={course.official_url} target="_blank" rel="noreferrer" className="transition-colors hover:text-ink">
+            Fuente oficial
+          </a>
+        </nav>
+      </div>
+    </header>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-slate-950 text-white">
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-course-grid bg-[length:40px_40px] opacity-25" />
-      <div aria-hidden="true" className="absolute left-1/2 top-0 -z-10 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-amber-400/20 blur-3xl" />
-      <div aria-hidden="true" className="absolute -right-40 top-20 -z-10 h-[28rem] w-[28rem] rounded-full bg-sky-400/20 blur-3xl" />
+    <section className="border-b border-rule">
+      <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <CourseBadge>Curso · {lectures.length} lecciones · Harvard Stat 110</CourseBadge>
+        <h1 className="mt-6 max-w-4xl text-balance font-serif text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          Probabilidad, explicada como un curso<span className="text-accent">.</span>
+        </h1>
+        <p className="mt-6 max-w-2xl text-pretty text-lg leading-7 text-muted">
+          Adaptación al español de Statistics 110 (Harvard). Fundamentos,
+          condicionamiento, variables aleatorias, distribuciones, teorema central
+          del límite y cadenas de Markov.
+        </p>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:py-24">
-        <div>
-          <CourseBadge>Statistics 110 en español</CourseBadge>
-          <h1 className="mt-6 max-w-4xl text-balance text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
-            Probabilidad desde cero, explicado como curso práctico.
-          </h1>
-          <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-slate-300">
-            Una versión visual y estudiable de la playlist de Harvard: conceptos, fórmulas, ejemplos, errores típicos y ejercicios por clase.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="#clases"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-base font-black text-slate-950 shadow-lg shadow-amber-400/20 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-200/80"
-            >
-              Empezar curso <Icon name="play" className="h-5 w-5" />
-            </Link>
-            <a
-              href={course.official_url}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Fuente oficial (se abre en pestaña nueva)`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-base font-bold text-white backdrop-blur transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
-            >
-              Fuente oficial <Icon name="arrow" className="h-5 w-5" />
-            </a>
-          </div>
+        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <Link
+            href="#clases"
+            className="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-ink/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          >
+            Empezar curso <span aria-hidden="true">→</span>
+          </Link>
+          <a
+            href={course.official_url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Fuente oficial (se abre en pestaña nueva)"
+            className="text-sm font-medium text-ink underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+          >
+            Fuente oficial ↗
+          </a>
         </div>
 
-        <div className="relative">
-          <div className="rounded-[2rem] border border-white/15 bg-white/10 p-5 shadow-2xl backdrop-blur-xl">
-            <div className="rounded-[1.5rem] bg-white p-5 text-slate-950">
-              <div className="flex items-center justify-between">
-                <span className="rounded-full bg-slate-950 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white">Ruta</span>
-                <span className="text-sm font-bold tabular-nums text-slate-500">
-                  {lectures.length}{" "}vídeos
-                </span>
-              </div>
-              <div className="mt-6 space-y-4">
-                {[
-                  ["01", "Contar bien antes de calcular", "Fundamentos"],
-                  ["02", "Condicionar sin engañarte", "Bayes & total probability"],
-                  ["03", "Variables aleatorias", "Esperanza y distribuciones"],
-                  ["04", "Normal, CLT y Markov", "Teoremas y procesos"],
-                ].map(([step, title, label]) => (
-                  <div key={step} className="flex gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-amber-300 text-sm font-black tabular-nums text-slate-950">{step}</div>
-                    <div>
-                      <p className="font-black text-slate-950">{title}</p>
-                      <p className="mt-1 text-sm text-slate-500">{label}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        <dl className="mt-16 grid max-w-2xl grid-cols-2 gap-x-10 gap-y-5 text-sm sm:grid-cols-3">
+          {[
+            ["Autor original", "Joe Blitzstein"],
+            ["Institución", "Harvard University"],
+            ["Idioma", "Español"],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+                {label}
+              </dt>
+              <dd className="mt-1 font-serif text-base font-medium text-ink">
+                {value}
+              </dd>
             </div>
-          </div>
-        </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
 }
 
-function Stats() {
-  const stats: Array<[value: string | number, label: string]> = [
-    [lectures.length, "clases"],
-    [blocks.length, "bloques"],
-    [lectures.reduce((acc, lecture) => acc + lecture.exercises.length, 0), "ejercicios"],
-    ["0→1", "nivel"],
+function DataStrip() {
+  const totalExercises = lectures.reduce((acc, l) => acc + l.exercises.length, 0);
+  const items = [
+    { value: String(lectures.length), label: "Lecciones" },
+    { value: String(blocks.length), label: "Bloques" },
+    { value: String(totalExercises), label: "Ejercicios" },
+    { value: "0→1", label: "Nivel" },
   ];
 
   return (
-    <section className="mx-auto -mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="grid gap-4 rounded-[2rem] border border-white/80 bg-white/85 p-4 shadow-soft backdrop-blur md:grid-cols-4">
-        {stats.map(([value, label]) => (
-          <div key={label} className="rounded-[1.5rem] bg-slate-50 p-6 text-center">
-            <p className="text-3xl font-black tabular-nums text-slate-950">{value}</p>
-            <p className="mt-1 text-sm font-bold uppercase tracking-[0.16em] text-slate-400">{label}</p>
+    <section aria-label="Datos del curso" className="border-b border-rule">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 sm:grid-cols-4">
+        {items.map(({ value, label }, idx) => (
+          <div
+            key={label}
+            className={`px-6 py-8 ${idx > 0 ? "border-l border-rule" : ""} ${
+              idx === 2 ? "sm:border-l" : ""
+            }`}
+          >
+            <p className="font-serif text-3xl font-medium tabular-nums text-ink">{value}</p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+              {label}
+            </p>
           </div>
         ))}
       </div>
@@ -125,64 +128,87 @@ function Stats() {
 
 function Roadmap() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <SectionTitle
-        eyebrow="Mapa del curso"
-        title="De intuición básica a cadenas de Markov"
-        description="La idea no es memorizar fórmulas: es construir una forma correcta de razonar con incertidumbre."
-      />
-
-      <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {blocks.map((block, index) => {
-          const stats = getBlockStats(block);
-          return (
-            <div
-              key={block}
-              className="rounded-[1.75rem] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur transition-shadow motion-safe:transition motion-safe:hover:-translate-y-1 hover:shadow-soft"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="grid h-12 w-12 place-items-center rounded-2xl bg-slate-950 text-sm font-black tabular-nums text-white">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-black tabular-nums text-amber-800">
-                  {stats.count}{" "}clases
-                </span>
-              </div>
-              <h3 className="mt-5 text-balance text-xl font-black text-slate-950">{block}</h3>
-              <p className="mt-3 text-pretty text-sm leading-6 text-slate-600">
-                Desde {stats.first?.num} hasta {stats.last?.num}: {stats.first?.title} → {stats.last?.title}.
-              </p>
-            </div>
-          );
-        })}
+    <section id="mapa" className="border-b border-rule">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid gap-12 lg:grid-cols-[280px_1fr]">
+          <div>
+            <SectionTitle
+              eyebrow="Mapa del curso"
+              title="De intuición a Markov"
+              description="No memorizar fórmulas: construir una forma correcta de razonar bajo incertidumbre."
+              align="left"
+            />
+          </div>
+          <ol>
+            {blocks.map((block, index) => {
+              const stats = getBlockStats(block);
+              const isLast = index === blocks.length - 1;
+              return (
+                <li
+                  key={block}
+                  className={`grid grid-cols-[3rem_1fr_auto] items-baseline gap-6 py-5 ${
+                    !isLast ? "border-b border-rule" : ""
+                  }`}
+                >
+                  <span className="font-mono text-xs tabular-nums text-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="font-serif text-xl font-medium text-ink">{block}</h3>
+                    <p className="mt-1 text-sm leading-6 text-muted">
+                      Desde {stats.first?.num} hasta {stats.last?.num}: {stats.first?.title} → {stats.last?.title}.
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] tabular-nums text-faint">
+                    {stats.count} clases
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
     </section>
   );
 }
 
-function Footer() {
+function CourseExplorerFallback() {
   return (
-    <footer className="border-t border-slate-200 bg-white/70">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <p>Curso de probabilidad en español basado en material público de Stat 110.</p>
-        <div className="flex gap-4">
+    <section
+      id="clases"
+      aria-busy="true"
+      className="mx-auto max-w-6xl px-6 py-20"
+    >
+      <div className="h-40 animate-pulse rounded-md border border-rule bg-white/30" />
+    </section>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer className="border-t border-rule">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 text-sm text-muted md:flex-row md:items-baseline md:justify-between">
+        <p>
+          Curso de probabilidad en español basado en material público de Stat 110.
+        </p>
+        <div className="flex gap-6">
           <a
             href={course.playlist_url}
             target="_blank"
             rel="noreferrer"
             aria-label="Playlist (se abre en pestaña nueva)"
-            className="rounded font-bold text-slate-700 transition-colors hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+            className="text-ink underline-offset-4 hover:underline"
           >
-            Playlist
+            Playlist ↗
           </a>
           <a
             href={course.official_url}
             target="_blank"
             rel="noreferrer"
             aria-label="Página oficial (se abre en pestaña nueva)"
-            className="rounded font-bold text-slate-700 transition-colors hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+            className="text-ink underline-offset-4 hover:underline"
           >
-            Página oficial
+            Página oficial ↗
           </a>
         </div>
       </div>

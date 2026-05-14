@@ -8,12 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      boxShadow: {
-        soft: "0 18px 70px rgba(15, 23, 42, 0.12)",
+      fontFamily: {
+        serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      backgroundImage: {
-        "course-grid":
-          "linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)",
+      colors: {
+        ink: "#1c1c1c",
+        paper: "#f5f1ea",
+        accent: "#c8102e",
+        rule: "rgba(28, 28, 28, 0.12)",
+        muted: "rgba(28, 28, 28, 0.6)",
+        faint: "rgba(28, 28, 28, 0.45)",
       },
     },
   },
