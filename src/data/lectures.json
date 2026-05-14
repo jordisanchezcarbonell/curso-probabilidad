@@ -1,0 +1,1387 @@
+{
+  "playlist_url": "https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo",
+  "official_url": "https://stat110.hsites.harvard.edu/youtube",
+  "lectures": [
+    {
+      "num": 1,
+      "title": "Probability and Counting",
+      "block": "Fundamentos",
+      "goal": "Construir la intuición básica: qué es un espacio muestral, qué es un evento y por qué muchas probabilidades se reducen a contar bien.",
+      "summary": "La clase empieza con la definición ingenua de probabilidad: casos favorables entre casos posibles, válida cuando todos los resultados son igualmente probables. El punto esencial es que antes de calcular hay que diseñar bien el espacio muestral. Con dos dados, por ejemplo, no debemos contar solo las sumas posibles, porque no todas tienen la misma probabilidad; debemos contar pares ordenados. A partir de ahí aparecen las reglas de conteo: multiplicación, factoriales, permutaciones y combinaciones.",
+      "concepts": [
+        "Espacio muestral S: conjunto de resultados posibles.",
+        "Evento A: subconjunto de S.",
+        "Resultados equiprobables: condición necesaria para usar casos favorables/casos posibles.",
+        "Regla del producto: si una etapa tiene a opciones y otra b, hay a·b resultados.",
+        "Permutaciones si el orden importa; combinaciones si el orden no importa."
+      ],
+      "formulas": [
+        "P(A)=|A|/|S| cuando todos los resultados son equiprobables.",
+        "n! = n·(n-1)·...·1.",
+        "Permutaciones sin reemplazo: n!/(n-k)!.",
+        "Combinaciones: C(n,k)=n!/[k!(n-k)!]."
+      ],
+      "example": "Si tiras dos dados, hay 36 pares ordenados posibles. La suma 7 tiene 6 casos: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1), así que P(suma 7)=6/36=1/6. La suma 2 solo tiene (1,1), así que P(suma 2)=1/36.",
+      "mistakes": [
+        "Contar resultados que no son equiprobables, como las sumas de dos dados.",
+        "Confundir AB y BA cuando el orden no importa.",
+        "Usar una fórmula de combinaciones sin entender qué se está eligiendo."
+      ],
+      "exercises": [
+        [
+          "Tiras una moneda 4 veces. ¿Cuántos resultados posibles hay?",
+          "2^4 = 16."
+        ],
+        [
+          "¿Cuántas formas hay de elegir 3 personas de un grupo de 10?",
+          "C(10,3)=120."
+        ],
+        [
+          "¿Cuál es P(suma 12) al tirar dos dados?",
+          "1/36."
+        ]
+      ]
+    },
+    {
+      "num": 2,
+      "title": "Story Proofs, Axioms of Probability",
+      "block": "Fundamentos",
+      "goal": "Pasar de contar mecánicamente a razonar con historias combinatorias y conocer los axiomas formales de la probabilidad.",
+      "summary": "Una story proof demuestra una identidad contando la misma situación de dos maneras distintas. Esto convierte fórmulas abstractas en razonamientos visuales. Después se introducen los axiomas de probabilidad: no negatividad, normalización y aditividad para eventos disjuntos. Estos axiomas permiten trabajar incluso cuando los resultados no son equiprobables, superando la definición ingenua de la primera clase.",
+      "concepts": [
+        "Story proof: explicación narrativa de una identidad matemática.",
+        "Axioma 1: P(A) ≥ 0 para cualquier evento A.",
+        "Axioma 2: P(S)=1.",
+        "Axioma 3: si A y B son disjuntos, P(A∪B)=P(A)+P(B).",
+        "Identidades combinatorias como Vandermonde pueden demostrarse contando selecciones."
+      ],
+      "formulas": [
+        "P(∅)=0.",
+        "P(A^c)=1-P(A).",
+        "Si A∩B=∅, entonces P(A∪B)=P(A)+P(B).",
+        "Identidad de Vandermonde: Σ C(m,j)C(n,k-j)=C(m+n,k)."
+      ],
+      "example": "Para demostrar Vandermonde, imagina que eliges k personas de un grupo con m hombres y n mujeres. Puedes contarlo directamente como C(m+n,k), o dividir por casos: elegir j hombres y k-j mujeres y sumar sobre j. Ambas formas cuentan lo mismo.",
+      "mistakes": [
+        "Pensar que todas las identidades se deben memorizar.",
+        "Sumar P(A)+P(B) sin comprobar si A y B son disjuntos.",
+        "Creer que los axiomas son teoría inútil: son la base para casos no equiprobables."
+      ],
+      "exercises": [
+        [
+          "Si P(A)=0.35, ¿cuánto vale P(A^c)?",
+          "0.65."
+        ],
+        [
+          "Si A y B son disjuntos, P(A)=0.2 y P(B)=0.5, ¿P(A∪B)?",
+          "0.7."
+        ],
+        [
+          "¿Qué significa una story proof?",
+          "Contar la misma situación de dos formas para justificar una identidad."
+        ]
+      ]
+    },
+    {
+      "num": 3,
+      "title": "Birthday Problem, Properties of Probability",
+      "block": "Fundamentos",
+      "goal": "Aprender a usar complementos e inclusión-exclusión, y entender por qué la intuición falla en problemas como el cumpleaños.",
+      "summary": "El problema del cumpleaños muestra que algunos eventos son mucho más probables de lo que parece. En un grupo de 23 personas, la probabilidad de que al menos dos compartan cumpleaños ya supera aproximadamente el 50%, bajo el modelo simplificado de 365 días equiprobables. La técnica clave es calcular el complemento: en vez de contar directamente las coincidencias, se cuenta la probabilidad de que todos tengan cumpleaños distintos.",
+      "concepts": [
+        "Complemento: a veces es más fácil calcular que algo no ocurra.",
+        "Inclusion-exclusion: corrige el doble conteo en uniones.",
+        "Evento “al menos uno”: suele resolverse con 1 - P(ninguno).",
+        "La intuición lineal falla cuando hay muchas parejas posibles."
+      ],
+      "formulas": [
+        "P(A∪B)=P(A)+P(B)-P(A∩B).",
+        "P(al menos uno)=1-P(ninguno).",
+        "Para n personas: P(todos distintos)=365·364·...·(365-n+1)/365^n."
+      ],
+      "example": "Con 23 personas hay C(23,2)=253 parejas. Aunque cada pareja concreta tiene poca probabilidad de coincidir, hay muchas oportunidades de coincidencia. Por eso la probabilidad agregada sube rápido.",
+      "mistakes": [
+        "Intentar contar directamente todos los casos con una o más coincidencias.",
+        "Olvidar restar la intersección en P(A∪B).",
+        "Interpretar “mi cumpleaños coincide con alguien” como si fuera igual a “alguien coincide con alguien”."
+      ],
+      "exercises": [
+        [
+          "¿Cuál es la técnica natural para “al menos un éxito”?",
+          "Calcular 1 - P(cero éxitos)."
+        ],
+        [
+          "Si P(A)=0.4, P(B)=0.5 y P(A∩B)=0.2, ¿P(A∪B)?",
+          "0.7."
+        ],
+        [
+          "¿Cuántas parejas hay en un grupo de 10 personas?",
+          "C(10,2)=45."
+        ]
+      ]
+    },
+    {
+      "num": 4,
+      "title": "Conditional Probability",
+      "block": "Condicionamiento",
+      "goal": "Entender cómo cambia una probabilidad cuando recibimos información adicional.",
+      "summary": "La probabilidad condicionada mide la probabilidad de A sabiendo que B ocurrió. La información B reduce el universo posible: ya no miramos todo S, sino solo la parte compatible con B. Esta idea es central para diagnóstico médico, filtros de datos, modelos financieros, machine learning y toma de decisiones. También se introduce independencia: A y B son independientes si saber B no cambia la probabilidad de A.",
+      "concepts": [
+        "P(A|B): probabilidad de A dado B.",
+        "El denominador pasa a ser el evento condicionado B.",
+        "Independencia: P(A|B)=P(A), si P(B)>0.",
+        "Dependencia no siempre significa causalidad.",
+        "Condicionar es actualizar el espacio de posibilidades."
+      ],
+      "formulas": [
+        "P(A|B)=P(A∩B)/P(B).",
+        "P(A∩B)=P(A|B)P(B).",
+        "A y B independientes ⇔ P(A∩B)=P(A)P(B)."
+      ],
+      "example": "Si en una baraja una carta es roja, ¿cuál es la probabilidad de que sea un corazón? El universo ya no son 52 cartas, sino las 26 rojas. Hay 13 corazones, por tanto P(corazón | roja)=13/26=1/2.",
+      "mistakes": [
+        "Confundir P(A|B) con P(B|A).",
+        "Olvidar que P(B) debe ser mayor que 0.",
+        "Creer que independencia significa que los eventos no pueden ocurrir juntos."
+      ],
+      "exercises": [
+        [
+          "Si P(A∩B)=0.12 y P(B)=0.3, ¿P(A|B)?",
+          "0.4."
+        ],
+        [
+          "Si A y B son independientes, P(A)=0.2 y P(B)=0.5, ¿P(A∩B)?",
+          "0.1."
+        ],
+        [
+          "¿P(A|B) suele ser igual a P(B|A)?",
+          "No, salvo casos especiales."
+        ]
+      ]
+    },
+    {
+      "num": 5,
+      "title": "Conditioning Continued, Law of Total Probability",
+      "block": "Condicionamiento",
+      "goal": "Aprender a dividir un problema en casos y recomponer probabilidades con la ley de probabilidad total y Bayes.",
+      "summary": "Muchas probabilidades se calculan partiendo el espacio en escenarios excluyentes y completos. Si B1, B2, ..., Bn forman una partición, P(A) se obtiene sumando P(A|Bi)P(Bi). Esta idea lleva directamente al teorema de Bayes: invertir una probabilidad condicionada de forma correcta. Bayes es crucial cuando observamos un efecto y queremos inferir la causa probable.",
+      "concepts": [
+        "Partición: eventos disjuntos cuya unión cubre todo el espacio.",
+        "Ley de probabilidad total: promedio ponderado de probabilidades condicionadas.",
+        "Bayes: inversión de condicionamiento.",
+        "Base rates: tasas base que no se deben ignorar.",
+        "Árboles de probabilidad como herramienta visual."
+      ],
+      "formulas": [
+        "P(A)=Σ P(A|B_i)P(B_i).",
+        "P(B_j|A)=P(A|B_j)P(B_j)/P(A).",
+        "Para dos casos: P(A)=P(A|B)P(B)+P(A|B^c)P(B^c)."
+      ],
+      "example": "Un test médico puede tener alta sensibilidad, pero si la enfermedad es rara, un positivo no implica necesariamente que la persona esté enferma. Bayes combina sensibilidad, falsos positivos y prevalencia.",
+      "mistakes": [
+        "Ignorar la tasa base.",
+        "Usar P(test positivo | enfermedad) como si fuera P(enfermedad | test positivo).",
+        "Olvidar que los casos deben cubrir todo el espacio y no solaparse."
+      ],
+      "exercises": [
+        [
+          "Una fábrica A produce 60% y B 40%. Defectos: A 1%, B 3%. ¿P(defecto)?",
+          "0.6·0.01+0.4·0.03=0.018."
+        ],
+        [
+          "¿Qué hace Bayes?",
+          "Invierte una probabilidad condicionada usando tasas base."
+        ],
+        [
+          "¿Qué es una partición?",
+          "Eventos disjuntos y exhaustivos."
+        ]
+      ]
+    },
+    {
+      "num": 6,
+      "title": "Monty Hall, Simpson's Paradox",
+      "block": "Condicionamiento",
+      "goal": "Ver cómo el condicionamiento puede parecer antiintuitivo mediante dos paradojas clásicas.",
+      "summary": "Monty Hall muestra que, tras abrirse una puerta con cabra, conviene cambiar: la probabilidad de ganar pasa a 2/3 si el presentador siempre abre una puerta perdedora y ofrece cambiar. La paradoja de Simpson muestra que una tendencia puede invertirse al agrupar datos. Ambas situaciones enseñan que la información, el diseño del experimento y las variables de confusión importan tanto como los números.",
+      "concepts": [
+        "Información revelada de forma no aleatoria.",
+        "Estrategia condicionada.",
+        "Variables de confusión.",
+        "Agregación de datos y cambio de tendencia.",
+        "Importancia del mecanismo generador de datos."
+      ],
+      "formulas": [
+        "Monty Hall: P(ganar cambiando)=2/3 bajo las reglas clásicas.",
+        "Simpson: comparaciones condicionadas pueden diferir de la comparación agregada."
+      ],
+      "example": "En Monty Hall, tu primera elección tiene probabilidad 1/3 de ser coche. Las otras dos puertas juntas tienen 2/3. Cuando el presentador elimina una cabra de esas dos, ese 2/3 se concentra en la puerta restante.",
+      "mistakes": [
+        "Pensar que después de abrir una puerta quedan 1/2 y 1/2.",
+        "Ignorar que el presentador sabe dónde está el premio.",
+        "Concluir causalidad desde datos agregados sin mirar subgrupos."
+      ],
+      "exercises": [
+        [
+          "En Monty Hall clásico, ¿cambiar o quedarse?",
+          "Cambiar."
+        ],
+        [
+          "¿Cuál es la probabilidad de ganar si cambias?",
+          "2/3."
+        ],
+        [
+          "¿Qué enseña Simpson?",
+          "Que una tendencia agregada puede invertirse al condicionar por subgrupos."
+        ]
+      ]
+    },
+    {
+      "num": 7,
+      "title": "Gambler's Ruin and Random Variables",
+      "block": "Variables aleatorias",
+      "goal": "Introducir variables aleatorias y modelar procesos acumulativos como la ruina del jugador.",
+      "summary": "Una variable aleatoria convierte resultados del experimento en números. Esto permite estudiar ganancias, pérdidas, conteos, tiempos y estados. El problema de la ruina del jugador modela a alguien que gana o pierde unidades hasta llegar a 0 o a una meta. Aunque parece un juego, representa fenómenos como capital de trading, colas, inventario o procesos de absorción.",
+      "concepts": [
+        "Variable aleatoria: función del espacio muestral a números.",
+        "Estado absorbente: una vez entras, no sales; por ejemplo, capital 0.",
+        "Caminata aleatoria: suma de pasos positivos y negativos.",
+        "Distribución: probabilidades asociadas a los valores de la variable."
+      ],
+      "formulas": [
+        "X:S→R.",
+        "Para una variable discreta: Σ P(X=x)=1.",
+        "En juego justo, la probabilidad de llegar a N antes que 0 desde i suele ser i/N."
+      ],
+      "example": "Si empiezas con 3 euros y tu objetivo es llegar a 10, en un juego justo la probabilidad de alcanzar 10 antes de arruinarte es 3/10. El resultado no depende de una corazonada, sino de la posición inicial dentro del intervalo.",
+      "mistakes": [
+        "Confundir resultado físico con valor de la variable aleatoria.",
+        "Pensar que una variable aleatoria debe ser realmente aleatoria después de observado el resultado.",
+        "Ignorar estados absorbentes."
+      ],
+      "exercises": [
+        [
+          "¿Qué es una variable aleatoria?",
+          "Una función que asigna números a resultados."
+        ],
+        [
+          "En ruina justa desde i=4 hasta N=20, ¿probabilidad de llegar a 20 antes que 0?",
+          "4/20=0.2."
+        ],
+        [
+          "¿Qué significa estado absorbente?",
+          "Un estado del que el proceso ya no sale."
+        ]
+      ]
+    },
+    {
+      "num": 8,
+      "title": "Random Variables and Their Distributions",
+      "block": "Variables aleatorias",
+      "goal": "Entender cómo se describen las probabilidades de una variable aleatoria mediante su distribución.",
+      "summary": "La distribución de X dice qué valores puede tomar y con qué probabilidad. En variables discretas usamos función de masa de probabilidad; en continuas aparecerá más tarde la densidad. También se estudian distribuciones clásicas como Bernoulli, Binomial y Geométrica. La clave es reconocer qué historia genera cada distribución.",
+      "concepts": [
+        "PMF: probability mass function para variables discretas.",
+        "CDF: función de distribución acumulada P(X≤x).",
+        "Bernoulli: éxito/fracaso.",
+        "Binomial: número de éxitos en n ensayos independientes.",
+        "Geométrica: espera hasta el primer éxito."
+      ],
+      "formulas": [
+        "PMF: p_X(x)=P(X=x).",
+        "CDF: F_X(x)=P(X≤x).",
+        "Bernoulli(p): P(X=1)=p, P(X=0)=1-p.",
+        "Bin(n,p): P(X=k)=C(n,k)p^k(1-p)^{n-k}.",
+        "Geom(p): P(X=k)=(1-p)^{k-1}p, k≥1."
+      ],
+      "example": "Si haces 10 llamadas comerciales y cada una convierte con probabilidad 0.2 de forma independiente, el número de ventas X sigue aproximadamente una Binomial(10,0.2). P(X=3)=C(10,3)0.2^3·0.8^7.",
+      "mistakes": [
+        "Usar Binomial cuando los ensayos no son independientes.",
+        "Confundir PMF con CDF.",
+        "Olvidar el soporte: qué valores puede tomar X."
+      ],
+      "exercises": [
+        [
+          "¿Qué distribución modela un solo éxito/fracaso?",
+          "Bernoulli."
+        ],
+        [
+          "¿Qué distribución modela número de éxitos en n intentos independientes?",
+          "Binomial."
+        ],
+        [
+          "Si X~Bern(0.7), ¿P(X=0)?",
+          "0.3."
+        ]
+      ]
+    },
+    {
+      "num": 9,
+      "title": "Expectation, Indicator Random Variables, Linearity",
+      "block": "Esperanza",
+      "goal": "Aprender el valor esperado y la técnica de indicadores, una de las herramientas más potentes del curso.",
+      "summary": "La esperanza es el promedio teórico de una variable aleatoria. No tiene por qué ser un valor posible: el promedio de tirar un dado es 3.5. La linealidad de la esperanza dice que E(X+Y)=E(X)+E(Y), incluso si X e Y no son independientes. Las variables indicadoras simplifican conteos complejos: se convierte un conteo en suma de ceros y unos.",
+      "concepts": [
+        "Esperanza como media ponderada.",
+        "Indicador I_A: vale 1 si ocurre A y 0 si no.",
+        "E(I_A)=P(A).",
+        "Linealidad de la esperanza.",
+        "La independencia no es necesaria para sumar esperanzas."
+      ],
+      "formulas": [
+        "E(X)=Σ x·P(X=x).",
+        "I_A=1 si A ocurre, 0 si no.",
+        "E(I_A)=P(A).",
+        "E(X+Y)=E(X)+E(Y).",
+        "E(cX)=cE(X)."
+      ],
+      "example": "Número esperado de ases en una mano de 5 cartas. Define I_j como indicador de que el as j está en la mano. Hay 4 ases. E(I_j)=5/52. Entonces E(total ases)=4·5/52=20/52=5/13.",
+      "mistakes": [
+        "Creer que la esperanza debe ser un resultado posible.",
+        "Exigir independencia para usar linealidad.",
+        "No descomponer un conteo complicado en indicadores simples."
+      ],
+      "exercises": [
+        [
+          "Esperanza de un dado justo.",
+          "(1+2+3+4+5+6)/6=3.5."
+        ],
+        [
+          "Si I_A es indicador y P(A)=0.25, ¿E(I_A)?",
+          "0.25."
+        ],
+        [
+          "¿Hace falta independencia para E(X+Y)=E(X)+E(Y)?",
+          "No."
+        ]
+      ]
+    },
+    {
+      "num": 10,
+      "title": "Expectation Continued",
+      "block": "Esperanza",
+      "goal": "Profundizar en esperanza, transformaciones y métodos alternativos para calcular promedios teóricos.",
+      "summary": "La esperanza se aplica no solo a X sino a funciones de X. Para variables discretas, E(g(X)) se obtiene sumando g(x) ponderado por P(X=x). Esta idea, conocida como LOTUS en versión general, evita tener que derivar primero la distribución de g(X). También se refuerza la interpretación de la esperanza como centro de gravedad de una distribución.",
+      "concepts": [
+        "Esperanza de una función g(X).",
+        "Centro de masa probabilístico.",
+        "No linealidad: E(g(X)) no suele ser g(E(X)).",
+        "Promedios teóricos frente a promedios muestrales.",
+        "Uso de simetría para calcular esperanzas."
+      ],
+      "formulas": [
+        "E(g(X))=Σ g(x)P(X=x).",
+        "En general, E(X^2) no es [E(X)]^2.",
+        "Var(X)=E(X^2)-[E(X)]^2."
+      ],
+      "example": "Si X es el resultado de un dado y quieres E(X²), no haces E(X)²=12.25. Calculas (1²+2²+3²+4²+5²+6²)/6=91/6≈15.17.",
+      "mistakes": [
+        "Sustituir E(g(X)) por g(E(X)).",
+        "Olvidar ponderar por probabilidades.",
+        "Mezclar promedio empírico con esperanza teórica."
+      ],
+      "exercises": [
+        [
+          "Si X es dado justo, ¿E(X²)?",
+          "91/6."
+        ],
+        [
+          "¿E(X²) suele ser igual a E(X)²?",
+          "No."
+        ],
+        [
+          "¿Qué mide Var(X)?",
+          "Dispersión alrededor de la media."
+        ]
+      ]
+    },
+    {
+      "num": 11,
+      "title": "The Poisson Distribution",
+      "block": "Distribuciones",
+      "goal": "Entender la distribución de Poisson como modelo para conteos de eventos raros o eventos en intervalos.",
+      "summary": "La Poisson modela el número de eventos en un intervalo cuando ocurren con tasa media constante y de forma aproximadamente independiente. Aparece como límite de una Binomial con muchos intentos y probabilidad pequeña. Es útil para llamadas por hora, errores por página, llegadas a una cola o goles en un partido bajo ciertos supuestos.",
+      "concepts": [
+        "Parámetro λ: tasa media de ocurrencias.",
+        "Conteos en intervalos.",
+        "Aproximación de Binomial(n,p) cuando n grande, p pequeño, np=λ.",
+        "Media y varianza iguales a λ.",
+        "Eventos raros agregados."
+      ],
+      "formulas": [
+        "X~Pois(λ).",
+        "P(X=k)=e^{-λ}λ^k/k!, k=0,1,2,...",
+        "E(X)=λ.",
+        "Var(X)=λ."
+      ],
+      "example": "Si una web recibe de media 3 errores 500 por hora, y el modelo Poisson es razonable, P(0 errores en una hora)=e^{-3}. P(2 errores)=e^{-3}3²/2!.",
+      "mistakes": [
+        "Usar Poisson si hay límite máximo pequeño de eventos.",
+        "Confundir λ con probabilidad; λ puede ser mayor que 1.",
+        "Ignorar dependencia o estacionalidad fuerte."
+      ],
+      "exercises": [
+        [
+          "Si X~Pois(4), ¿E(X)?",
+          "4."
+        ],
+        [
+          "Si X~Pois(4), ¿Var(X)?",
+          "4."
+        ],
+        [
+          "¿Puede λ ser 3.5?",
+          "Sí, es una tasa media, no una probabilidad."
+        ]
+      ]
+    },
+    {
+      "num": 12,
+      "title": "Discrete vs. Continuous, the Uniform",
+      "block": "Distribuciones continuas",
+      "goal": "Distinguir variables discretas y continuas, y entender densidades usando la distribución uniforme.",
+      "summary": "En variables continuas, la probabilidad de un punto exacto suele ser 0. Por eso no usamos P(X=x) como en discretas, sino áreas bajo una densidad. La Uniforme continua en un intervalo asigna igual densidad a todos los puntos del intervalo. Es el modelo más simple para empezar a pensar en densidades, CDFs e integración.",
+      "concepts": [
+        "Variable discreta: valores separados, probabilidades puntuales.",
+        "Variable continua: probabilidades sobre intervalos.",
+        "PDF: función de densidad.",
+        "El área bajo la densidad total vale 1.",
+        "Uniforme(a,b): todos los subintervalos de igual longitud son igualmente probables."
+      ],
+      "formulas": [
+        "Para continua: P(a≤X≤b)=∫_a^b f(x)dx.",
+        "Uniforme(a,b): f(x)=1/(b-a) para a≤x≤b.",
+        "Uniforme(a,b): E(X)=(a+b)/2.",
+        "Uniforme(a,b): Var(X)=(b-a)^2/12."
+      ],
+      "example": "Si X~Uniforme(0,10), la probabilidad de que X esté entre 2 y 5 es la longitud del intervalo dividida por 10: 3/10=0.3.",
+      "mistakes": [
+        "Pensar que f(x) es una probabilidad puntual.",
+        "Creer que P(X=3) tiene masa positiva en una continua.",
+        "Olvidar que la densidad puede ser mayor que 1; el área es lo importante."
+      ],
+      "exercises": [
+        [
+          "Si X~Unif(0,10), ¿P(2≤X≤5)?",
+          "0.3."
+        ],
+        [
+          "En una continua, ¿P(X=3)?",
+          "0, salvo distribuciones mixtas o con masa puntual."
+        ],
+        [
+          "¿Qué debe valer el área total bajo una PDF?",
+          "1."
+        ]
+      ]
+    },
+    {
+      "num": 13,
+      "title": "Normal Distribution",
+      "block": "Distribuciones continuas",
+      "goal": "Entender la distribución Normal, su estandarización y por qué aparece tan a menudo.",
+      "summary": "La Normal es la famosa campana de Gauss. Está determinada por su media μ y desviación estándar σ. Muchas variables agregadas o errores de medición se aproximan a una Normal por efectos de suma, idea que se formalizará más adelante con el Teorema Central del Límite. La estandarización convierte cualquier Normal en una Normal estándar Z.",
+      "concepts": [
+        "Normal estándar Z~N(0,1).",
+        "Media μ: centro.",
+        "Desviación estándar σ: escala/dispersión.",
+        "Estandarización.",
+        "Simetría alrededor de la media."
+      ],
+      "formulas": [
+        "X~N(μ,σ²).",
+        "Z=(X-μ)/σ.",
+        "Si X~N(μ,σ²), entonces Z~N(0,1).",
+        "Regla aproximada 68-95-99.7 para 1,2,3 desviaciones estándar."
+      ],
+      "example": "Si las notas de un examen se modelan como N(70,10²), una nota de 85 tiene z=(85-70)/10=1.5. Está 1.5 desviaciones estándar por encima de la media.",
+      "mistakes": [
+        "Confundir varianza σ² con desviación estándar σ.",
+        "Aplicar Normal a datos fuertemente asimétricos sin comprobar.",
+        "Interpretar densidad como probabilidad puntual."
+      ],
+      "exercises": [
+        [
+          "Si X~N(100,15²), ¿z para X=130?",
+          "2."
+        ],
+        [
+          "¿Qué parámetros definen una Normal?",
+          "Media μ y varianza σ²."
+        ],
+        [
+          "¿La Normal es discreta o continua?",
+          "Continua."
+        ]
+      ]
+    },
+    {
+      "num": 14,
+      "title": "Location, Scale, and LOTUS",
+      "block": "Transformaciones",
+      "goal": "Dominar cambios de localización y escala, y usar LOTUS para esperanzas de funciones.",
+      "summary": "Transformar una variable aleatoria con a+bX desplaza y reescala su distribución. La localización cambia el centro; la escala cambia la dispersión. LOTUS permite calcular E(g(X)) directamente desde la distribución de X, sin derivar primero la distribución de g(X). Es una herramienta transversal para muchas clases posteriores.",
+      "concepts": [
+        "Transformación lineal a+bX.",
+        "Localización: sumar una constante.",
+        "Escala: multiplicar por una constante.",
+        "LOTUS: Law of the Unconscious Statistician.",
+        "Diferencia entre transformar variable y transformar esperanza."
+      ],
+      "formulas": [
+        "E(a+bX)=a+bE(X).",
+        "Var(a+bX)=b²Var(X).",
+        "LOTUS discreto: E(g(X))=Σg(x)P(X=x).",
+        "LOTUS continuo: E(g(X))=∫g(x)f_X(x)dx."
+      ],
+      "example": "Si X es temperatura en Celsius y F=32+1.8X, entonces E(F)=32+1.8E(X), y Var(F)=1.8²Var(X). La varianza no suma 32 porque desplazar no cambia la dispersión.",
+      "mistakes": [
+        "Pensar que Var(a+X)=a+Var(X).",
+        "Olvidar elevar al cuadrado el factor de escala en la varianza.",
+        "Derivar distribuciones innecesariamente cuando LOTUS basta."
+      ],
+      "exercises": [
+        [
+          "Si E(X)=5 y Y=2+3X, ¿E(Y)?",
+          "17."
+        ],
+        [
+          "Si Var(X)=4 y Y=2+3X, ¿Var(Y)?",
+          "36."
+        ],
+        [
+          "¿Qué permite LOTUS?",
+          "Calcular E(g(X)) desde la distribución de X."
+        ]
+      ]
+    },
+    {
+      "num": 15,
+      "title": "Midterm Review",
+      "block": "Repaso",
+      "goal": "Consolidar conteo, condicionamiento, variables aleatorias, esperanza y distribuciones básicas.",
+      "summary": "Esta clase de repaso conecta las herramientas vistas: contar espacios muestrales, condicionar correctamente, usar Bayes, reconocer distribuciones y calcular esperanzas. Es un buen punto para detenerse y resolver problemas antes de entrar en temas más técnicos. La señal de dominio es poder explicar qué modelo estás usando y por qué.",
+      "concepts": [
+        "Elegir el espacio muestral correcto.",
+        "Usar complementos para eventos “al menos uno”.",
+        "Aplicar Bayes sin olvidar tasas base.",
+        "Reconocer Bernoulli, Binomial, Geométrica y Poisson.",
+        "Aplicar linealidad de la esperanza con indicadores."
+      ],
+      "formulas": [
+        "P(A|B)=P(A∩B)/P(B).",
+        "P(A)=ΣP(A|B_i)P(B_i).",
+        "E(X+Y)=E(X)+E(Y).",
+        "Var(X)=E(X²)-E(X)²."
+      ],
+      "example": "Un problema mixto puede pedir el número esperado de coincidencias de cumpleaños. En vez de listar todas las configuraciones, defines indicadores por cada pareja y sumas esperanzas. Esta estrategia evita conteos enormes.",
+      "mistakes": [
+        "Intentar memorizar soluciones en lugar de identificar la estructura.",
+        "No comprobar independencia antes de multiplicar probabilidades.",
+        "No separar el problema en casos."
+      ],
+      "exercises": [
+        [
+          "¿Qué técnica simplifica conteos esperados?",
+          "Variables indicadoras."
+        ],
+        [
+          "¿Qué distribución usarías para número de éxitos en 20 ensayos independientes?",
+          "Binomial."
+        ],
+        [
+          "¿Qué fórmula invierte condicionamiento?",
+          "Teorema de Bayes."
+        ]
+      ]
+    },
+    {
+      "num": 16,
+      "title": "Exponential Distribution",
+      "block": "Distribuciones continuas",
+      "goal": "Entender tiempos de espera y la propiedad sin memoria de la Exponencial.",
+      "summary": "La Exponencial modela tiempos de espera hasta el próximo evento en un proceso con tasa constante, como llegadas de clientes o fallos de componentes bajo supuestos ideales. Su propiedad más característica es la falta de memoria: haber esperado cierto tiempo no cambia la distribución del tiempo adicional de espera. Está conectada con el proceso de Poisson.",
+      "concepts": [
+        "Tiempo de espera hasta el siguiente evento.",
+        "Parámetro λ como tasa.",
+        "Propiedad memoryless.",
+        "Relación con Poisson: conteos vs tiempos entre eventos.",
+        "Hazard rate constante."
+      ],
+      "formulas": [
+        "X~Expo(λ).",
+        "f(x)=λe^{-λx}, x≥0.",
+        "F(x)=1-e^{-λx}.",
+        "E(X)=1/λ.",
+        "P(X>s+t|X>s)=P(X>t)."
+      ],
+      "example": "Si llegan clientes a una media de 6 por hora, el tiempo medio entre llegadas es 1/6 horas, es decir, 10 minutos. La probabilidad de esperar más de t horas es e^{-6t}.",
+      "mistakes": [
+        "Confundir λ con media; la media es 1/λ.",
+        "Usar Exponencial si la tasa cambia mucho con el tiempo.",
+        "Interpretar memoryless como que el pasado no ocurrió; significa que no cambia la distribución futura."
+      ],
+      "exercises": [
+        [
+          "Si X~Expo(2), ¿E(X)?",
+          "1/2."
+        ],
+        [
+          "Si X~Expo(λ), ¿P(X>t)?",
+          "e^{-λt}."
+        ],
+        [
+          "¿Qué distribución cuenta eventos en un intervalo relacionado?",
+          "Poisson."
+        ]
+      ]
+    },
+    {
+      "num": 17,
+      "title": "Moment Generating Functions",
+      "block": "Herramientas avanzadas",
+      "goal": "Introducir funciones generadoras de momentos como herramienta para identificar distribuciones y calcular momentos.",
+      "summary": "La función generadora de momentos transforma una variable aleatoria en una función M(t)=E(e^{tX}). Sus derivadas en cero dan momentos como E(X) y E(X²). Además, si dos variables tienen la misma MGF en un entorno de cero, bajo condiciones estándar tienen la misma distribución. Las MGFs facilitan trabajar con sumas independientes.",
+      "concepts": [
+        "Momento: E(X^n).",
+        "MGF como firma de una distribución.",
+        "Derivadas de la MGF en t=0.",
+        "Suma de variables independientes.",
+        "Existencia de la MGF en un intervalo alrededor de 0."
+      ],
+      "formulas": [
+        "M_X(t)=E(e^{tX}).",
+        "M'_X(0)=E(X).",
+        "M''_X(0)=E(X²).",
+        "Si X,Y independientes: M_{X+Y}(t)=M_X(t)M_Y(t)."
+      ],
+      "example": "Para Bernoulli(p), M(t)=E(e^{tX})=(1-p)e^0+pe^t=1-p+pe^t. Derivando en 0 obtienes E(X)=p.",
+      "mistakes": [
+        "Pensar que todas las distribuciones tienen MGF finita.",
+        "Olvidar que la multiplicación de MGFs para sumas requiere independencia.",
+        "Confundir MGF con PDF o PMF."
+      ],
+      "exercises": [
+        [
+          "Define MGF.",
+          "M_X(t)=E(e^{tX})."
+        ],
+        [
+          "¿Qué da M'_X(0)?",
+          "E(X)."
+        ],
+        [
+          "Para sumas independientes, ¿qué ocurre con MGFs?",
+          "Se multiplican."
+        ]
+      ]
+    },
+    {
+      "num": 18,
+      "title": "MGFs Continued",
+      "block": "Herramientas avanzadas",
+      "goal": "Usar MGFs para demostrar distribuciones de sumas y obtener resultados con menos álgebra directa.",
+      "summary": "La segunda parte desarrolla aplicaciones. Por ejemplo, la suma de Poisson independientes es Poisson con parámetro suma; la suma de Normales independientes es Normal con medias y varianzas sumadas. Las MGFs convierten convoluciones complicadas en productos sencillos. El coste es que hay que conocer y manipular funciones correctamente.",
+      "concepts": [
+        "Identificación de distribuciones por MGF.",
+        "Cierre de familias bajo suma.",
+        "Poisson independientes suman Poisson.",
+        "Normales independientes suman Normal.",
+        "MGF como atajo frente a convolución."
+      ],
+      "formulas": [
+        "Si X~Pois(λ), M_X(t)=exp(λ(e^t-1)).",
+        "Si X~N(μ,σ²), M_X(t)=exp(μt+σ²t²/2).",
+        "Si X_i independientes Pois(λ_i), ΣX_i~Pois(Σλ_i)."
+      ],
+      "example": "Si X~Pois(2) e Y~Pois(5) independientes, M_{X+Y}=exp(2(e^t-1))exp(5(e^t-1))=exp(7(e^t-1)), luego X+Y~Pois(7).",
+      "mistakes": [
+        "Aplicar resultados de suma sin independencia.",
+        "No comprobar que la MGF resultante coincide con una distribución conocida.",
+        "Perder el sentido probabilístico detrás del álgebra."
+      ],
+      "exercises": [
+        [
+          "X~Pois(3), Y~Pois(4) independientes. ¿X+Y?",
+          "Pois(7)."
+        ],
+        [
+          "¿Por qué las MGFs simplifican sumas?",
+          "Porque la MGF de una suma independiente es producto."
+        ],
+        [
+          "Normal + Normal independiente da...",
+          "Normal."
+        ]
+      ]
+    },
+    {
+      "num": 19,
+      "title": "Joint, Conditional, and Marginal Distributions",
+      "block": "Distribuciones multivariantes",
+      "goal": "Pasar de una variable a varias: distribuciones conjuntas, marginales y condicionadas.",
+      "summary": "Cuando estudiamos dos variables, necesitamos saber cómo se comportan juntas. La distribución conjunta da la probabilidad de combinaciones; las marginales se obtienen sumando o integrando sobre la otra variable; las condicionadas actualizan una variable sabiendo el valor de otra. Esta clase es fundamental para dependencia, inferencia y modelos estadísticos.",
+      "concepts": [
+        "Distribución conjunta de X e Y.",
+        "Marginal: distribución de una variable ignorando la otra.",
+        "Condicionada: distribución de X dado Y=y.",
+        "Independencia de variables aleatorias.",
+        "Suma/integración para eliminar variables."
+      ],
+      "formulas": [
+        "Discreto: P_X(x)=Σ_y P(X=x,Y=y).",
+        "Condicional: P(X=x|Y=y)=P(X=x,Y=y)/P(Y=y).",
+        "Independencia: P(X=x,Y=y)=P_X(x)P_Y(y).",
+        "Continuo: f_X(x)=∫f_{X,Y}(x,y)dy."
+      ],
+      "example": "Si una tabla conjunta tiene filas para X y columnas para Y, la marginal de X se obtiene sumando cada fila. La condicionada de X dado Y=y se obtiene tomando la columna y normalizándola por su suma.",
+      "mistakes": [
+        "Confundir conjunta con marginal.",
+        "No normalizar al calcular una condicionada.",
+        "Asumir independencia solo porque las variables parecen distintas."
+      ],
+      "exercises": [
+        [
+          "¿Cómo obtienes una marginal discreta de X?",
+          "Sumando la conjunta sobre todos los valores de Y."
+        ],
+        [
+          "¿Qué condición indica independencia discreta?",
+          "P(X=x,Y=y)=P_X(x)P_Y(y)."
+        ],
+        [
+          "¿Qué hace una distribución condicionada?",
+          "Actualiza la distribución con información de otra variable."
+        ]
+      ]
+    },
+    {
+      "num": 20,
+      "title": "Multinomial and Cauchy",
+      "block": "Distribuciones multivariantes",
+      "goal": "Estudiar conteos en múltiples categorías y una distribución continua con comportamiento extremo: Cauchy.",
+      "summary": "La Multinomial generaliza la Binomial: en lugar de éxito/fracaso, cada ensayo puede caer en varias categorías. Es útil para encuestas, clasificación y conteos por segmentos. La Cauchy, por otro lado, muestra que no todas las distribuciones se comportan como la Normal: tiene colas pesadas y esperanza no definida. Esto obliga a respetar las condiciones de cada teorema.",
+      "concepts": [
+        "Multinomial: conteos por categorías.",
+        "Probabilidades p1,...,pk que suman 1.",
+        "Cauchy: distribución con colas pesadas.",
+        "Media no definida en Cauchy.",
+        "No todos los promedios se estabilizan como esperamos."
+      ],
+      "formulas": [
+        "Multinomial: P(n1,...,nk)=n!/(n1!...nk!) Π p_i^{n_i}.",
+        "Σ n_i=n, Σ p_i=1.",
+        "Cauchy estándar: f(x)=1/[π(1+x²)]."
+      ],
+      "example": "Si clasificas 100 usuarios en 3 canales de adquisición con probabilidades 0.5, 0.3 y 0.2, los conteos por canal siguen una Multinomial(100;0.5,0.3,0.2), bajo independencia y probabilidades constantes.",
+      "mistakes": [
+        "Tratar categorías multinomiales como binomiales independientes sin restricciones.",
+        "Olvidar que los conteos deben sumar n.",
+        "Asumir que toda distribución tiene media y varianza."
+      ],
+      "exercises": [
+        [
+          "¿Qué generaliza la Multinomial?",
+          "La Binomial a más de dos categorías."
+        ],
+        [
+          "¿Qué deben sumar los conteos n_i?",
+          "n."
+        ],
+        [
+          "¿La Cauchy tiene esperanza definida?",
+          "No."
+        ]
+      ]
+    },
+    {
+      "num": 21,
+      "title": "Covariance and Correlation",
+      "block": "Dependencia",
+      "goal": "Medir relación lineal entre variables y distinguir covarianza, correlación e independencia.",
+      "summary": "La covarianza mide cómo dos variables se mueven conjuntamente. La correlación normaliza esa medida entre -1 y 1. Si la correlación es positiva, valores altos de X tienden a acompañarse de valores altos de Y; si es negativa, tienden a moverse en sentidos opuestos. Pero correlación cero no implica independencia salvo en casos especiales, como algunas estructuras normales.",
+      "concepts": [
+        "Covarianza como co-movimiento.",
+        "Correlación como covarianza normalizada.",
+        "Independencia implica covarianza cero si las varianzas existen.",
+        "Covarianza cero no implica independencia en general.",
+        "Varianza de una suma depende de covarianzas."
+      ],
+      "formulas": [
+        "Cov(X,Y)=E[(X-E X)(Y-E Y)].",
+        "Cov(X,Y)=E(XY)-E(X)E(Y).",
+        "Corr(X,Y)=Cov(X,Y)/(SD(X)SD(Y)).",
+        "Var(X+Y)=Var(X)+Var(Y)+2Cov(X,Y)."
+      ],
+      "example": "Si X es gasto en anuncios e Y ventas, una correlación positiva indicaría asociación lineal. No prueba que los anuncios causen ventas: puede haber temporada, promociones o variables ocultas.",
+      "mistakes": [
+        "Confundir correlación con causalidad.",
+        "Pensar que correlación 0 significa independencia siempre.",
+        "Comparar covarianzas de variables con escalas distintas sin normalizar."
+      ],
+      "exercises": [
+        [
+          "¿Entre qué valores está la correlación?",
+          "Entre -1 y 1."
+        ],
+        [
+          "Si X,Y independientes, ¿Cov(X,Y)?",
+          "0, si existe."
+        ],
+        [
+          "¿Corr=0 implica independencia?",
+          "No en general."
+        ]
+      ]
+    },
+    {
+      "num": 22,
+      "title": "Transformations and Convolutions",
+      "block": "Transformaciones",
+      "goal": "Aprender a encontrar distribuciones de variables transformadas y sumas de variables.",
+      "summary": "Muchas veces no queremos X directamente sino g(X), o la suma X+Y. Las transformaciones de variables requieren cuidar soporte, monotonicidad y jacobianos en continuo. Las convoluciones permiten obtener la distribución de sumas independientes. Esta clase conecta cálculo con probabilidad y prepara el terreno para distribuciones más avanzadas.",
+      "concepts": [
+        "Transformación Y=g(X).",
+        "Cambio de variable en densidades.",
+        "Soporte de la nueva variable.",
+        "Convolución para sumas independientes.",
+        "Jacobiano en transformaciones continuas."
+      ],
+      "formulas": [
+        "Si Y=g(X) y g es monótona: f_Y(y)=f_X(g^{-1}(y)) |d/dy g^{-1}(y)|.",
+        "Para suma: f_{X+Y}(t)=∫ f_X(x)f_Y(t-x)dx, si independientes.",
+        "Discreto: P(X+Y=t)=Σ_x P(X=x)P(Y=t-x)."
+      ],
+      "example": "Si X,Y son dados independientes, la distribución de X+Y se obtiene sumando productos P(X=x)P(Y=s-x). Para s=7 hay seis combinaciones, por eso P=6/36.",
+      "mistakes": [
+        "Olvidar el valor absoluto del jacobiano.",
+        "No ajustar el soporte después de transformar.",
+        "Usar convolución sin independencia."
+      ],
+      "exercises": [
+        [
+          "¿Para qué sirve la convolución?",
+          "Para obtener la distribución de una suma."
+        ],
+        [
+          "¿Qué hay que cuidar en cambios de variable continuos?",
+          "Soporte y jacobiano."
+        ],
+        [
+          "¿La fórmula simple de convolución requiere independencia?",
+          "Sí."
+        ]
+      ]
+    },
+    {
+      "num": 23,
+      "title": "Beta Distribution",
+      "block": "Distribuciones continuas",
+      "goal": "Entender la distribución Beta como modelo flexible para probabilidades y proporciones.",
+      "summary": "La Beta vive en el intervalo [0,1], por eso es natural para modelar proporciones, tasas y probabilidades desconocidas. Sus parámetros α y β pueden interpretarse de forma intuitiva como éxitos y fracasos previos en contextos bayesianos. Es conjugada de la Binomial/Bernoulli, lo que la hace muy útil para actualizar creencias.",
+      "concepts": [
+        "Soporte [0,1].",
+        "Parámetros α y β controlan forma.",
+        "Modelo para proporciones.",
+        "Conjugación Beta-Binomial.",
+        "Actualización bayesiana de probabilidades."
+      ],
+      "formulas": [
+        "X~Beta(α,β).",
+        "f(x)=Γ(α+β)/(Γ(α)Γ(β)) x^{α-1}(1-x)^{β-1}, 0<x<1.",
+        "E(X)=α/(α+β).",
+        "Si prior Beta(α,β) y observas s éxitos, f fracasos: posterior Beta(α+s,β+f)."
+      ],
+      "example": "Si modelas la conversión de una landing con prior Beta(2,2) y observas 30 conversiones y 70 no conversiones, la posterior es Beta(32,72). La media posterior es 32/(32+72).",
+      "mistakes": [
+        "Usar Beta para variables fuera de [0,1] sin transformar.",
+        "Interpretar α y β como probabilidades.",
+        "Ignorar la fuerza del prior cuando α+β es grande."
+      ],
+      "exercises": [
+        [
+          "¿Cuál es el soporte de Beta?",
+          "[0,1]."
+        ],
+        [
+          "Media de Beta(2,3).",
+          "2/5."
+        ],
+        [
+          "Posterior de Beta(1,1) con 8 éxitos y 2 fracasos.",
+          "Beta(9,3)."
+        ]
+      ]
+    },
+    {
+      "num": 24,
+      "title": "Gamma Distribution and Poisson Process",
+      "block": "Procesos",
+      "goal": "Relacionar tiempos de espera acumulados con procesos de Poisson mediante la distribución Gamma.",
+      "summary": "Un proceso de Poisson modela eventos que ocurren en el tiempo con tasa constante e incrementos independientes. Los conteos en intervalos son Poisson; los tiempos entre eventos son Exponenciales; el tiempo hasta el r-ésimo evento sigue una Gamma. Esta familia conecta conteos y tiempos de espera en un mismo marco.",
+      "concepts": [
+        "Proceso de Poisson con tasa λ.",
+        "Incrementos independientes y estacionarios.",
+        "Tiempo entre llegadas: Exponencial.",
+        "Tiempo hasta el r-ésimo evento: Gamma.",
+        "Suma de exponenciales independientes."
+      ],
+      "formulas": [
+        "Si N(t)~Pois(λt).",
+        "Interarribos: X_i~Expo(λ).",
+        "T_r=X_1+...+X_r ~ Gamma(r,λ).",
+        "Gamma(r,λ): E(T_r)=r/λ, Var(T_r)=r/λ²."
+      ],
+      "example": "Si llegan tickets de soporte a tasa 4 por hora, el tiempo hasta el tercer ticket tiene distribución Gamma(3,4). Su media es 3/4 horas, es decir, 45 minutos.",
+      "mistakes": [
+        "Confundir conteo N(t) con tiempo T_r.",
+        "Usar tasa λ como escala sin revisar parametrización.",
+        "Asumir Poisson si hay ráfagas o dependencia fuerte."
+      ],
+      "exercises": [
+        [
+          "En un proceso Poisson de tasa 5/h, ¿N(2h)?",
+          "Pois(10)."
+        ],
+        [
+          "Tiempo hasta primer evento.",
+          "Exponencial(λ)."
+        ],
+        [
+          "Tiempo hasta r eventos.",
+          "Gamma(r,λ)."
+        ]
+      ]
+    },
+    {
+      "num": 25,
+      "title": "Order Statistics and Conditional Expectation",
+      "block": "Esperanza condicional",
+      "goal": "Estudiar máximos, mínimos y valores ordenados, e introducir esperanza condicional.",
+      "summary": "Las order statistics son los valores de una muestra ordenados de menor a mayor. Permiten estudiar máximos, mínimos, percentiles y rankings. La esperanza condicional, por su parte, es un promedio actualizado con información parcial. Es una de las ideas más importantes para predicción y modelos probabilísticos.",
+      "concepts": [
+        "Order statistics: X_(1)≤...≤X_(n).",
+        "Mínimo y máximo de una muestra.",
+        "Distribución del máximo mediante CDF.",
+        "Esperanza condicional E(Y|A).",
+        "Promedio restringido a un evento."
+      ],
+      "formulas": [
+        "P(max X_i ≤ x)=P(X_1≤x,...,X_n≤x)=F(x)^n, si iid.",
+        "P(min X_i > x)=P(X_1>x,...,X_n>x)=[1-F(x)]^n.",
+        "E(Y|A)=Σ y·P(Y=y|A) en discreto."
+      ],
+      "example": "Si X_1,...,X_n son Uniforme(0,1), entonces P(max≤x)=x^n para 0≤x≤1. Cuantas más observaciones tomas, más probable es que el máximo esté cerca de 1.",
+      "mistakes": [
+        "Olvidar que max≤x implica que todos son ≤x.",
+        "Confundir E(Y|A) con E(Y) restringida sin renormalizar.",
+        "No distinguir ordenar valores de ordenar etiquetas."
+      ],
+      "exercises": [
+        [
+          "Si X_i iid con CDF F, ¿CDF del máximo?",
+          "F(x)^n."
+        ],
+        [
+          "¿Qué mide E(Y|A)?",
+          "Promedio de Y sabiendo que A ocurrió."
+        ],
+        [
+          "Para uniformes, ¿P(max≤0.5) con n=3?",
+          "0.5^3=0.125."
+        ]
+      ]
+    },
+    {
+      "num": 26,
+      "title": "Conditional Expectation Continued",
+      "block": "Esperanza condicional",
+      "goal": "Profundizar en esperanza condicional y la ley de la esperanza total.",
+      "summary": "La esperanza condicional permite descomponer un promedio general en promedios por casos. La ley de la esperanza total dice que E(Y)=Σ E(Y|B_i)P(B_i). Es la versión de la ley de probabilidad total para promedios. Esta técnica simplifica problemas donde un escenario latente cambia la distribución de Y.",
+      "concepts": [
+        "Promedio por escenarios.",
+        "Ley de la esperanza total.",
+        "Condicionar para simplificar.",
+        "Variables latentes o grupos.",
+        "Predicción óptima bajo error cuadrático."
+      ],
+      "formulas": [
+        "E(Y)=Σ E(Y|B_i)P(B_i).",
+        "E(Y)=E(E(Y|X)).",
+        "Para indicadores: E(I_A|B)=P(A|B)."
+      ],
+      "example": "Si una tienda tiene días normales y días de promoción, puedes calcular ventas esperadas como E(ventas|normal)P(normal)+E(ventas|promo)P(promo). No necesitas mezclar todo desde cero.",
+      "mistakes": [
+        "Olvidar ponderar por la probabilidad de cada caso.",
+        "Condicionar en casos que no cubren todo el espacio.",
+        "Tratar E(Y|X) como una constante; es una función de X."
+      ],
+      "exercises": [
+        [
+          "Si E(Y|A)=10, E(Y|A^c)=4, P(A)=0.3, ¿E(Y)?",
+          "10·0.3+4·0.7=5.8."
+        ],
+        [
+          "Completa: E(Y)=E(____).",
+          "E(Y|X)."
+        ],
+        [
+          "¿Qué técnica ayuda ante escenarios latentes?",
+          "Condicionar por el escenario."
+        ]
+      ]
+    },
+    {
+      "num": 27,
+      "title": "Conditional Expectation given an R.V.",
+      "block": "Esperanza condicional",
+      "goal": "Entender E(Y|X) como una variable aleatoria y una función de la información disponible.",
+      "summary": "E(Y|X) no es un número fijo: es una función de X. Si observas X, actualizas el promedio esperado de Y. Esta idea está detrás de la regresión: predecir Y usando X. También permite calcular esperanzas complejas con la torre E(Y)=E(E(Y|X)).",
+      "concepts": [
+        "E(Y|X) como función de X.",
+        "Predicción usando información parcial.",
+        "Propiedad de la torre.",
+        "Relación con regresión.",
+        "Reducción de incertidumbre al observar variables."
+      ],
+      "formulas": [
+        "E(Y|X=x)=Σ y·P(Y=y|X=x).",
+        "E(Y|X)=g(X), donde g(x)=E(Y|X=x).",
+        "E(E(Y|X))=E(Y)."
+      ],
+      "example": "Si X es el número de visitas a una landing e Y el número de ventas, E(Y|X=x) puede ser xp si cada visita convierte con probabilidad p. Al observar X, la predicción de ventas cambia.",
+      "mistakes": [
+        "Pensar que E(Y|X) es siempre lineal en X.",
+        "Confundir E(Y|X=x) con E(Y|X).",
+        "Olvidar que E(Y|X) sigue siendo aleatoria antes de observar X."
+      ],
+      "exercises": [
+        [
+          "¿E(Y|X) es número o variable aleatoria?",
+          "Variable aleatoria, función de X."
+        ],
+        [
+          "¿Qué dice la propiedad de la torre?",
+          "E(E(Y|X))=E(Y)."
+        ],
+        [
+          "¿Qué conexión tiene con ML/regresión?",
+          "Es la mejor predicción media de Y usando X bajo error cuadrático."
+        ]
+      ]
+    },
+    {
+      "num": 28,
+      "title": "Inequalities",
+      "block": "Teoremas límite",
+      "goal": "Aprender desigualdades que acotan probabilidades sin conocer toda la distribución.",
+      "summary": "Las desigualdades probabilísticas permiten decir algo útil con poca información. Markov usa la esperanza de una variable no negativa; Chebyshev usa media y varianza; Jensen relaciona convexidad y esperanza; Cauchy-Schwarz acota productos. Son herramientas importantes para demostrar teoremas límite y razonar bajo incertidumbre.",
+      "concepts": [
+        "Cotas superiores de probabilidades.",
+        "Desigualdad de Markov.",
+        "Desigualdad de Chebyshev.",
+        "Jensen y convexidad.",
+        "Cauchy-Schwarz."
+      ],
+      "formulas": [
+        "Markov: si X≥0, P(X≥a)≤E(X)/a.",
+        "Chebyshev: P(|X-μ|≥a)≤σ²/a².",
+        "Jensen: si g convexa, g(E X)≤E(g(X)).",
+        "Cauchy-Schwarz: |E(XY)|≤sqrt(E(X²)E(Y²))."
+      ],
+      "example": "Si una variable tiene media 100 y varianza 25, Chebyshev dice que P(|X-100|≥10)≤25/100=0.25. Puede ser una cota conservadora, pero no requiere conocer la distribución exacta.",
+      "mistakes": [
+        "Esperar cotas ajustadas siempre.",
+        "Usar Markov con variables que pueden ser negativas sin adaptación.",
+        "Aplicar Jensen con función cóncava como si fuera convexa."
+      ],
+      "exercises": [
+        [
+          "Si X≥0 y E(X)=10, cota de P(X≥50).",
+          "≤10/50=0.2."
+        ],
+        [
+          "Chebyshev usa...",
+          "Media y varianza."
+        ],
+        [
+          "Jensen depende de...",
+          "Convexidad o concavidad de la función."
+        ]
+      ]
+    },
+    {
+      "num": 29,
+      "title": "Law of Large Numbers and Central Limit Theorem",
+      "block": "Teoremas límite",
+      "goal": "Entender por qué los promedios se estabilizan y por qué aparece la Normal en sumas grandes.",
+      "summary": "La Ley de los Grandes Números dice que el promedio muestral se acerca a la media verdadera al aumentar n. El Teorema Central del Límite dice que, bajo condiciones generales, la suma o promedio estandarizado se aproxima a una Normal. Estos resultados explican por qué se puede estimar, simular y hacer inferencia estadística.",
+      "concepts": [
+        "Promedio muestral.",
+        "Convergencia hacia la esperanza.",
+        "Estandarización.",
+        "Aproximación Normal.",
+        "Diferencia entre estabilización del promedio y forma de la distribución del error."
+      ],
+      "formulas": [
+        "Media muestral: X̄_n=(X_1+...+X_n)/n.",
+        "LLN: X̄_n → μ.",
+        "CLT: sqrt(n)(X̄_n-μ)/σ ≈ N(0,1) para n grande.",
+        "Var(X̄_n)=σ²/n."
+      ],
+      "example": "Si simulas lanzamientos de moneda, la proporción de caras se acerca a 0.5 a largo plazo. Pero las desviaciones absolutas pueden seguir creciendo; lo que se reduce es el error relativo/promedio.",
+      "mistakes": [
+        "Creer que la LLN garantiza resultados exactos en muestras pequeñas.",
+        "Pensar que el CLT requiere que los datos originales sean Normales.",
+        "Confundir convergencia del promedio con que la variabilidad desaparece en cada observación individual."
+      ],
+      "exercises": [
+        [
+          "¿Qué dice la LLN informalmente?",
+          "Los promedios se acercan a la media verdadera."
+        ],
+        [
+          "¿Qué distribución aparece en el CLT?",
+          "Normal."
+        ],
+        [
+          "Si duplicas n, ¿Var(X̄) aumenta o disminuye?",
+          "Disminuye; Var(X̄)=σ²/n."
+        ]
+      ]
+    },
+    {
+      "num": 30,
+      "title": "Chi-Square, Student-t, Multivariate Normal",
+      "block": "Estadística inferencial",
+      "goal": "Conocer distribuciones centrales para inferencia estadística y modelos multivariantes.",
+      "summary": "La Chi-cuadrado aparece como suma de cuadrados de Normales estándar; la t de Student aparece al estandarizar con varianza estimada; la Normal multivariante generaliza la Normal a vectores. Estas distribuciones conectan probabilidad con estadística práctica: intervalos de confianza, tests y modelos de variables correlacionadas.",
+      "concepts": [
+        "Chi-cuadrado con k grados de libertad.",
+        "t de Student y varianza desconocida.",
+        "Normal multivariante.",
+        "Matriz de covarianza.",
+        "Grados de libertad."
+      ],
+      "formulas": [
+        "Si Z_i iid N(0,1), ΣZ_i² ~ χ²_k.",
+        "T=Z/sqrt(V/k) ~ t_k, con Z~N(0,1), V~χ²_k independientes.",
+        "X~N_p(μ,Σ) para vector aleatorio p-dimensional."
+      ],
+      "example": "Al estimar la media de una población Normal con varianza desconocida, se usa t de Student en vez de Normal estándar porque la incertidumbre de la varianza estimada ensancha las colas.",
+      "mistakes": [
+        "Ignorar grados de libertad.",
+        "Usar z en lugar de t cuando la varianza es desconocida y la muestra pequeña.",
+        "Pensar que matriz de covarianza solo guarda varianzas; también guarda covarianzas."
+      ],
+      "exercises": [
+        [
+          "Suma de cuadrados de k Normales estándar.",
+          "Chi-cuadrado con k grados de libertad."
+        ],
+        [
+          "¿Cuándo aparece t?",
+          "Al estandarizar usando varianza estimada."
+        ],
+        [
+          "En Normal multivariante, ¿qué captura Σ?",
+          "Varianzas y covarianzas."
+        ]
+      ]
+    },
+    {
+      "num": 31,
+      "title": "Markov Chains",
+      "block": "Cadenas de Markov",
+      "goal": "Introducir procesos donde el futuro depende del estado actual, no de todo el pasado.",
+      "summary": "Una cadena de Markov describe un sistema que salta entre estados con ciertas probabilidades. La propiedad de Markov dice que, dado el estado actual, el pasado no aporta información adicional para predecir el siguiente estado. Se representan con matrices de transición y grafos. Aparecen en colas, ranking, genética, finanzas, navegación web y modelos de comportamiento.",
+      "concepts": [
+        "Estados.",
+        "Matriz de transición.",
+        "Propiedad de Markov.",
+        "Distribución inicial.",
+        "Evolución por multiplicación matricial."
+      ],
+      "formulas": [
+        "P(X_{n+1}=j | X_n=i, pasado)=P(X_{n+1}=j | X_n=i).",
+        "P_{ij}=P(i→j).",
+        "Distribución tras n pasos: π_n=π_0 P^n."
+      ],
+      "example": "Si un usuario puede estar en Home, Producto o Checkout, una matriz de transición puede modelar la probabilidad de pasar de una página a otra en el siguiente paso. La distribución futura se calcula multiplicando por la matriz.",
+      "mistakes": [
+        "Asumir propiedad de Markov sin justificar.",
+        "Construir filas de transición que no suman 1.",
+        "Confundir estado actual con historial completo."
+      ],
+      "exercises": [
+        [
+          "¿Qué debe sumar cada fila de una matriz de transición?",
+          "1."
+        ],
+        [
+          "¿Qué dice la propiedad de Markov?",
+          "El futuro depende del presente, no del pasado completo, dado el presente."
+        ],
+        [
+          "¿Cómo evolucionas n pasos?",
+          "Con P^n."
+        ]
+      ]
+    },
+    {
+      "num": 32,
+      "title": "Markov Chains Continued",
+      "block": "Cadenas de Markov",
+      "goal": "Analizar comportamiento a largo plazo, estados recurrentes/transitorios y distribuciones estacionarias.",
+      "summary": "Las cadenas de Markov no solo describen el próximo paso; interesa saber qué ocurre a largo plazo. Algunos estados son transitorios, otros recurrentes; algunas cadenas convergen a una distribución estacionaria. Una distribución estacionaria π satisface πP=π: si el sistema empieza con esa distribución, permanece igual tras una transición.",
+      "concepts": [
+        "Estado transitorio.",
+        "Estado recurrente.",
+        "Distribución estacionaria.",
+        "Comunicación entre estados.",
+        "Irreducibilidad y periodicidad como condiciones de convergencia."
+      ],
+      "formulas": [
+        "πP=π.",
+        "Σπ_i=1.",
+        "π_i≥0.",
+        "Si la cadena es regular, π_n tiende a π."
+      ],
+      "example": "Un modelo simple de clima con estados Sol y Lluvia puede tener una distribución estacionaria. Aunque el clima de mañana sea incierto, a largo plazo puede estabilizarse una proporción esperada de días soleados y lluviosos.",
+      "mistakes": [
+        "Confundir estacionaria con estado fijo individual.",
+        "Creer que toda cadena converge a una única estacionaria.",
+        "No imponer que las probabilidades π sumen 1."
+      ],
+      "exercises": [
+        [
+          "¿Qué ecuación define una estacionaria?",
+          "πP=π."
+        ],
+        [
+          "¿Qué restricción adicional debe cumplir π?",
+          "Sus componentes suman 1 y son no negativas."
+        ],
+        [
+          "¿Estacionaria significa que el estado no cambia?",
+          "No; significa que la distribución no cambia."
+        ]
+      ]
+    },
+    {
+      "num": 33,
+      "title": "Markov Chains Continued Further",
+      "block": "Cadenas de Markov",
+      "goal": "Profundizar en absorción, tiempos de llegada y análisis estructural de cadenas.",
+      "summary": "La parte avanzada de cadenas trata preguntas como: ¿cuál es la probabilidad de acabar absorbido en cierto estado?, ¿cuánto tiempo tarda el proceso en llegar a un conjunto?, ¿qué clases cerradas existen? Estas herramientas permiten modelar abandono, conversión, default crediticio, ruina, retención o cualquier proceso con estados y transiciones.",
+      "concepts": [
+        "Estados absorbentes.",
+        "Tiempo de llegada/hitting time.",
+        "Clases cerradas.",
+        "Probabilidades de absorción.",
+        "Tiempo esperado hasta absorción."
+      ],
+      "formulas": [
+        "Estado absorbente i: P_{ii}=1.",
+        "Para tiempos esperados: h_i=1+Σ P_{ij}h_j, con condiciones de frontera.",
+        "Para probabilidades de llegada: u_i=Σ P_{ij}u_j, con fronteras u=0/1."
+      ],
+      "example": "En un funnel de venta, Compra y Abandono pueden modelarse como estados absorbentes. Desde cada pantalla calculas la probabilidad de acabar comprando y el número esperado de pasos hasta terminar.",
+      "mistakes": [
+        "No fijar condiciones de frontera en ecuaciones de hitting time.",
+        "Mezclar probabilidades de absorción con tiempos esperados.",
+        "Ignorar clases cerradas que impiden llegar a ciertos estados."
+      ],
+      "exercises": [
+        [
+          "¿Qué es un estado absorbente?",
+          "Uno con P_ii=1."
+        ],
+        [
+          "¿Para qué sirven hitting times?",
+          "Para medir tiempo hasta alcanzar un estado o conjunto."
+        ],
+        [
+          "En un funnel, ¿qué estados podrían ser absorbentes?",
+          "Compra y abandono."
+        ]
+      ]
+    },
+    {
+      "num": 34,
+      "title": "A Look Ahead",
+      "block": "Cierre",
+      "goal": "Conectar el curso con estadística, inferencia, machine learning, simulación y toma de decisiones.",
+      "summary": "La última clase mira hacia adelante: la probabilidad es el lenguaje base para estadística, ciencia de datos, inferencia bayesiana, modelos predictivos, procesos estocásticos y decisión bajo incertidumbre. El curso no acaba en fórmulas; te da una forma de pensar: definir el experimento, condicionar correctamente, elegir modelos adecuados y cuantificar incertidumbre.",
+      "concepts": [
+        "Probabilidad como base de inferencia.",
+        "Modelos generativos.",
+        "Simulación Monte Carlo.",
+        "Decisión bajo incertidumbre.",
+        "Puente hacia estadística y machine learning."
+      ],
+      "formulas": [
+        "Bayes: posterior ∝ likelihood × prior.",
+        "Monte Carlo: promedio simulado aproxima esperanza.",
+        "Riesgo esperado: E[pérdida(decisión, estado)]."
+      ],
+      "example": "En un sistema de pricing, puedes modelar demanda incierta, simular escenarios, calcular beneficio esperado y elegir la política con mejor trade-off entre rentabilidad y riesgo.",
+      "mistakes": [
+        "Ver probabilidad como una lista de fórmulas aisladas.",
+        "No validar supuestos del modelo.",
+        "Confundir precisión matemática con utilidad práctica si el modelo no representa el problema real."
+      ],
+      "exercises": [
+        [
+          "¿Qué conecta probabilidad con ML?",
+          "Modelar incertidumbre y distribuciones de datos."
+        ],
+        [
+          "¿Qué estima Monte Carlo?",
+          "Esperanzas/probabilidades mediante simulación."
+        ],
+        [
+          "¿Cuál es el primer paso en un problema probabilístico?",
+          "Definir experimento, espacio muestral y eventos/variables."
+        ]
+      ]
+    },
+    {
+      "num": "Bonus",
+      "title": "Joseph Blitzstein: The Soul of Statistics",
+      "block": "Bonus",
+      "goal": "Entender la filosofía del curso: estadística y probabilidad como herramientas para pensar con incertidumbre.",
+      "summary": "Este vídeo no es una clase técnica como las anteriores, sino una pieza motivacional/conceptual. La idea principal es que la estadística no es solo calcular; es formular buenas preguntas, entender variabilidad, distinguir señal de ruido y tomar decisiones razonables con información incompleta.",
+      "concepts": [
+        "Pensamiento estadístico.",
+        "Incertidumbre como parte natural de los datos.",
+        "Importancia de modelos y supuestos.",
+        "Diferencia entre cálculo mecánico e interpretación.",
+        "Comunicación clara de resultados."
+      ],
+      "formulas": [
+        "No aplica como clase técnica principal."
+      ],
+      "example": "Un resultado puede ser matemáticamente correcto pero mal interpretado si no se explican los supuestos, el tamaño muestral, el sesgo de selección o la incertidumbre.",
+      "mistakes": [
+        "Reducir estadística a software.",
+        "No comunicar incertidumbre.",
+        "Usar modelos sin explicar sus límites."
+      ],
+      "exercises": [
+        [
+          "¿Qué pregunta deberías hacer antes de modelar?",
+          "Qué decisión o incertidumbre queremos resolver."
+        ],
+        [
+          "¿Por qué importan los supuestos?",
+          "Porque determinan cuándo el modelo es válido."
+        ],
+        [
+          "¿Qué diferencia hay entre dato y evidencia?",
+          "La evidencia requiere contexto, modelo e interpretación."
+        ]
+      ]
+    }
+  ]
+}

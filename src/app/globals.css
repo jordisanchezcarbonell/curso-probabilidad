@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7f3ea;
+  --foreground: #171717;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 5%, rgba(14, 165, 233, 0.12), transparent 26rem),
+    linear-gradient(180deg, #fff9ee 0%, #f7f3ea 44%, #f9fafb 100%);
+  font-family:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: #facc15;
+  color: #111827;
+}
+
+:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.prose-course h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+  text-wrap: balance;
+}
+
+.prose-course p {
+  line-height: 1.8;
+  color: #374151;
+  text-wrap: pretty;
+}
+
+.formula-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.98));
+  overflow-wrap: anywhere;
+}
