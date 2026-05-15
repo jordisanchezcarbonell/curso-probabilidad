@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Icon } from "@/components/Icon";
 import { getLectureBySlug, getLectureNavigation, lectures } from "@/lib/course";
 
 export function generateStaticParams() {
@@ -23,6 +22,16 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
 
   const navigation = getLectureNavigation(params.slug);
   const label = lecture.num === "Bonus" ? "Bonus" : `Clase ${lecture.num}`;
+  const sections = [
+    ["#panorama", "Panorama"],
+    ["#resumen", "Resumen"],
+    ["#conceptos", "Conceptos clave"],
+    ["#formulas", "Fórmulas"],
+    ["#ejemplo", "Ejemplo"],
+    ["#errores", "Errores típicos"],
+    ["#checklist", "Checklist"],
+    ["#ejercicios", "Ejercicios"],
+  ] as const;
 
   return (
     <>
@@ -68,14 +77,7 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
                 </p>
                 <nav aria-label="Secciones de la clase" className="mt-4">
                   <ol className="space-y-2 text-sm">
-                    {[
-                      ["#resumen", "Resumen"],
-                      ["#conceptos", "Conceptos clave"],
-                      ["#formulas", "Fórmulas"],
-                      ["#ejemplo", "Ejemplo"],
-                      ["#errores", "Errores típicos"],
-                      ["#ejercicios", "Ejercicios"],
-                    ].map(([href, title], idx) => (
+                    {sections.map(([href, title], idx) => (
                       <li key={href} className="grid grid-cols-[2rem_1fr] gap-2">
                         <span className="font-mono text-xs tabular-nums text-faint">
                           {String(idx + 1).padStart(2, "0")}
@@ -93,11 +95,60 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
               </aside>
 
               <div className="max-w-2xl space-y-16">
-                <Section id="resumen" eyebrow="01" title="Resumen">
+                <Section id="panorama" eyebrow="01" title="Panorama rápido">
+                  <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+                    <div className="space-y-6">
+                      <div className="rounded-2xl border border-rule bg-white/40 p-6">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+                          Por qué importa
+                        </p>
+                        <p className="mt-3 text-pretty text-base leading-7 text-ink">
+                          {lecture.whyItMatters}
+                        </p>
+                      </div>
+
+                      <div className="rounded-2xl border border-rule bg-white/40 p-6">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+                          Cómo encaja en el curso
+                        </p>
+                        <ol className="mt-4 space-y-4">
+                          {lecture.connections.map((connection, idx) => (
+                            <li
+                              key={connection}
+                              className="grid grid-cols-[2rem_1fr] gap-4"
+                            >
+                              <span className="pt-1 font-mono text-xs tabular-nums text-accent">
+                                {String(idx + 1).padStart(2, "0")}
+                              </span>
+                              <p className="text-pretty text-sm leading-6 text-muted">
+                                {connection}
+                              </p>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+
+                    <dl className="grid gap-px overflow-hidden rounded-2xl border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-1">
+                      {lecture.stats.map((stat) => (
+                        <div key={stat.label} className="bg-paper px-5 py-4">
+                          <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-faint">
+                            {stat.label}
+                          </dt>
+                          <dd className="mt-2 font-serif text-xl font-medium text-ink">
+                            {stat.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                </Section>
+
+                <Section id="resumen" eyebrow="02" title="Resumen">
                   <p>{lecture.summary}</p>
                 </Section>
 
-                <Section id="conceptos" eyebrow="02" title="Conceptos clave">
+                <Section id="conceptos" eyebrow="03" title="Conceptos clave">
                   <ol>
                     {lecture.concepts.map((concept, idx) => {
                       const isLast = idx === lecture.concepts.length - 1;
@@ -120,14 +171,13 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
                   </ol>
                 </Section>
 
-                <Section id="formulas" eyebrow="03" title="Fórmulas importantes">
+                <Section id="formulas" eyebrow="04" title="Fórmulas importantes">
                   <ol>
-                    {lecture.formulas.map((raw, idx) => {
-                      const { label, expr, note } = parseFormula(raw);
+                    {lecture.formulas.map(({ label, expr, note }, idx) => {
                       const isLast = idx === lecture.formulas.length - 1;
                       return (
                         <li
-                          key={raw}
+                          key={expr}
                           className={`grid grid-cols-[2rem_1fr] gap-4 py-5 ${
                             !isLast ? "border-b border-rule" : ""
                           }`}
@@ -156,7 +206,7 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
                   </ol>
                 </Section>
 
-                <Section id="ejemplo" eyebrow="04" title="Ejemplo explicado">
+                <Section id="ejemplo" eyebrow="05" title="Ejemplo explicado">
                   <div className="border-l-2 border-accent pl-5">
                     <p className="font-serif text-lg italic leading-8 text-ink">
                       {lecture.example}
@@ -164,7 +214,7 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
                   </div>
                 </Section>
 
-                <Section id="errores" eyebrow="05" title="Errores típicos">
+                <Section id="errores" eyebrow="06" title="Errores típicos">
                   <ol>
                     {lecture.mistakes.map((mistake, idx) => {
                       const isLast = idx === lecture.mistakes.length - 1;
@@ -187,7 +237,30 @@ export default function LecturePage({ params }: { params: { slug: string } }) {
                   </ol>
                 </Section>
 
-                <Section id="ejercicios" eyebrow="06" title="Ejercicios">
+                <Section id="checklist" eyebrow="07" title="Checklist de estudio">
+                  <ol>
+                    {lecture.studyChecklist.map((item, idx) => {
+                      const isLast = idx === lecture.studyChecklist.length - 1;
+                      return (
+                        <li
+                          key={item}
+                          className={`grid grid-cols-[2rem_1fr] items-baseline gap-4 py-4 ${
+                            !isLast ? "border-b border-rule" : ""
+                          }`}
+                        >
+                          <span className="font-mono text-xs tabular-nums text-accent">
+                            ✓
+                          </span>
+                          <span className="text-pretty text-base leading-7 text-ink">
+                            {item}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </Section>
+
+                <Section id="ejercicios" eyebrow="08" title="Ejercicios">
                   {lecture.exercises.length === 0 ? (
                     <p className="text-sm text-muted">
                       Esta clase aún no tiene ejercicios asignados.
@@ -296,25 +369,4 @@ function Section({
       <div className="article">{children}</div>
     </section>
   );
-}
-
-function parseFormula(raw: string): { label?: string; expr: string; note?: string } {
-  const cleaned = raw.replace(/\.\s*$/, "").trim();
-
-  const colonIdx = cleaned.indexOf(": ");
-  if (colonIdx > 0 && colonIdx < 40) {
-    const possibleLabel = cleaned.slice(0, colonIdx).trim();
-    if (/^[A-Za-zÀ-ÿ\s]+$/.test(possibleLabel)) {
-      return { label: possibleLabel, expr: cleaned.slice(colonIdx + 2).trim() };
-    }
-  }
-
-  const noteMatch = cleaned.match(
-    /^(.+?)\s+(cuando|donde|para todo|para cada)\s+(.+)$/i,
-  );
-  if (noteMatch) {
-    return { expr: noteMatch[1].trim(), note: `${noteMatch[2]} ${noteMatch[3]}`.trim() };
-  }
-
-  return { expr: cleaned };
 }

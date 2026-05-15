@@ -52,8 +52,14 @@ export function CourseExplorer() {
         lecture.block,
         lecture.goal,
         lecture.summary,
+        lecture.whyItMatters,
         lecture.concepts.join(" "),
-        lecture.formulas.join(" "),
+        lecture.formulas
+          .map((f) => [f.label, f.expr, f.note].filter(Boolean).join(" "))
+          .join(" "),
+        lecture.connections.join(" "),
+        lecture.studyChecklist.join(" "),
+        lecture.stats.map((stat) => `${stat.label} ${stat.value}`).join(" "),
       ]
         .join(" ")
         .toLowerCase();
